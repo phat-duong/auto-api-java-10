@@ -1,0 +1,37 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPath": "/card-service/build",
+        "headers": {
+          "api-key": {
+            "equalTo": "another-private-key"
+          }
+        },
+        "bodyPatterns": [
+          {
+            "equalToJson": {
+              "id": "bf8b03eb-dcc8-4590-82d9-a5ad11f67798",
+              "name": "Doe Jos",
+              "cardColor": "Silver",
+              "textColor": "Black",
+              "material": "Plastic"
+            }
+          }
+        ],
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "cardHolder": "Jose Doe",
+          "cardNumber": "1111 2222 3333 4444",
+          "expiredDate": "01-23-2028"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

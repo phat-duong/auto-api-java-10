@@ -12,6 +12,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tests.TestMaster;
 import utils.DbUtils;
 import utils.LoginUtils;
 import utils.RestAssuredUtils;
@@ -25,42 +26,12 @@ import java.util.UUID;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
+import static utils.ConstantUtils.*;
+import static utils.DateTimeUtils.verifyDateTime;
+import static utils.DateTimeUtils.verifyDateTimeDb;
 
-public class UpdateUserTests {
+public class UpdateUserTests extends TestMaster {
 
-    static String token;
-    static final String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-    static final String HEADER_AUTHORIZATION = "Authorization";
-    static final String HEADER_CONTENT_TYPE = "Content-Type";
-    static final String CONTENT_TYPE = "application/json; charset=utf-8";
-    static final String HEADER_POWER_BY = "X-Powered-By";
-    static final String POWER_BY = "Express";
-    static final String EMAIL_TEMPLATE = "auto_api_%s@abc.com";
-    static final String CREATE_USER_API = "/api/user";
-    static final String GET_USER_API = "/api/user/%s";
-    static final String DELETE_USER_API = "/api/user/%s";
-    static final String UPDATE_USER_API = "/api/user/%s";
-    static List<String> createdCustomerIds = new ArrayList<>();
-
-    @BeforeAll
-    static void setUp(){
-        RestAssuredUtils.setUp();
-    }
-
-    @BeforeEach
-    void beforeEach(){
-        token = LoginUtils.getToken();
-    }
-
-    @AfterAll
-    static void tearDown(){
-        //6. Clean up data
-        for(String id: createdCustomerIds){
-            RestAssured.given().log().all()
-                    .header(HEADER_AUTHORIZATION, token)
-                    .delete(String.format(DELETE_USER_API, id));
-        }
-    }
     @Test
     void verifyUpdateUserSuccessfull(){
 
@@ -159,15 +130,6 @@ public class UpdateUserTests {
         softAssertions.assertAll();
     }
 
-    void verifyDateTime(SoftAssertions softAssertions, String targetDateTime, LocalDateTime timeBefore, LocalDateTime timeAfter){
-        LocalDateTime userUpdatedAt = LocalDateTime.parse(targetDateTime, DateTimeFormatter.ofPattern(DATE_TIME_FORMAT));
-        softAssertions.assertThat(userUpdatedAt.isAfter(timeBefore)).isTrue();
-        softAssertions.assertThat(userUpdatedAt.isBefore(timeAfter)).isTrue();
-    }
 
-    void verifyDateTimeDb(SoftAssertions softAssertions, LocalDateTime targetDateTime, LocalDateTime timeBefore, LocalDateTime timeAfter){
-        softAssertions.assertThat(targetDateTime.isAfter(timeBefore)).isTrue();
-        softAssertions.assertThat(targetDateTime.isBefore(timeAfter)).isTrue();
-    }
 }
 
