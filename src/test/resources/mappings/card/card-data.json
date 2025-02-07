@@ -11,7 +11,7 @@
         "bodyPatterns": [
           {
             "equalToJson": {
-              "id": "bf8b03eb-dcc8-4590-82d9-a5ad11f67798",
+              "id": "${json-unit.any-string}",
               "name": "Doe Jos",
               "cardColor": "Silver",
               "textColor": "Black",
@@ -24,7 +24,7 @@
       "response": {
         "status": 200,
         "jsonBody": {
-          "cardHolder": "Jose Doe",
+          "cardHolder": "Doe Jos",
           "cardNumber": "1111 2222 3333 4444",
           "expiredDate": "01-23-2028"
         },
